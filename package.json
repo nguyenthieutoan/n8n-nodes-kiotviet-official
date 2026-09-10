@@ -20,6 +20,9 @@
   },
   "homepage": "https://github.com/nguyenthieutoan/n8n-nodes-kiotviet-official#readme",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc && gulp build:icons",
     "dev": "tsc --watch",
