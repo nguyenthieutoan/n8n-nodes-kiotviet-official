@@ -1,0 +1,18 @@
+# Source files (compiled files are in dist/)
+nodes/
+credentials/
+index.ts
+tsconfig.json
+gulpfile.js
+
+# CI/CD & Git
+.github/
+.git/
+.gitignore
+.npmignore
+
+# Testing & Development
+tests/
+jest.config.js
+docs/
+*.log
