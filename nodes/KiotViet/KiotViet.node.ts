@@ -13,7 +13,7 @@ import { invoiceOperations, invoiceFields } from './InvoiceDescription';
 import { categoryOperations, categoryFields } from './CategoryDescription';
 import { branchOperations, branchFields } from './BranchDescription';
 import { webhookOperations, webhookFields } from './WebhookDescription';
-import { kiotVietApiRequest, kiotVietApiRequestAllItems } from './GenericFunctions';
+import { kiotVietApiRequest, kiotVietApiRequestAllItems, simplifyResponse } from './GenericFunctions';
 
 export class KiotViet implements INodeType {
   description: INodeTypeDescription = {
@@ -114,6 +114,11 @@ export class KiotViet implements INodeType {
               const limit = this.getNodeParameter('limit', i, 50) as number;
               responseData = await kiotVietApiRequestAllItems.call(this, 'data', 'GET', '/products', {}, qs, limit);
             }
+
+            const simplify = this.getNodeParameter('simplify', i, true) as boolean;
+            if (simplify) {
+              responseData = simplifyResponse('product', responseData);
+            }
           } else if (operation === 'getInventory') {
             const returnAll = this.getNodeParameter('returnAll', i, false) as boolean;
             const qs: IDataObject = {};
@@ -122,6 +127,11 @@ export class KiotViet implements INodeType {
             } else {
               const limit = this.getNodeParameter('limit', i, 50) as number;
               responseData = await kiotVietApiRequestAllItems.call(this, 'data', 'GET', '/products/inventories', {}, qs, limit);
+            }
+
+            const simplify = this.getNodeParameter('simplify', i, true) as boolean;
+            if (simplify) {
+              responseData = simplifyResponse('product', responseData);
             }
           } else if (operation === 'create') {
             const name = this.getNodeParameter('name', i) as string;
@@ -173,6 +183,11 @@ export class KiotViet implements INodeType {
               const limit = this.getNodeParameter('limit', i, 50) as number;
               responseData = await kiotVietApiRequestAllItems.call(this, 'data', 'GET', '/customers', {}, qs, limit);
             }
+
+            const simplify = this.getNodeParameter('simplify', i, true) as boolean;
+            if (simplify) {
+              responseData = simplifyResponse('customer', responseData);
+            }
           } else if (operation === 'create') {
             const name = this.getNodeParameter('name', i) as string;
             const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
@@ -218,6 +233,11 @@ export class KiotViet implements INodeType {
             } else {
               const limit = this.getNodeParameter('limit', i, 50) as number;
               responseData = await kiotVietApiRequestAllItems.call(this, 'data', 'GET', '/orders', {}, qs, limit);
+            }
+
+            const simplify = this.getNodeParameter('simplify', i, true) as boolean;
+            if (simplify) {
+              responseData = simplifyResponse('order', responseData);
             }
           } else if (operation === 'create') {
             const branchId = this.getNodeParameter('branchId', i) as number;
@@ -269,6 +289,11 @@ export class KiotViet implements INodeType {
             } else {
               const limit = this.getNodeParameter('limit', i, 50) as number;
               responseData = await kiotVietApiRequestAllItems.call(this, 'data', 'GET', '/invoices', {}, qs, limit);
+            }
+
+            const simplify = this.getNodeParameter('simplify', i, true) as boolean;
+            if (simplify) {
+              responseData = simplifyResponse('invoice', responseData);
             }
           } else if (operation === 'create') {
             const branchId = this.getNodeParameter('branchId', i) as number;

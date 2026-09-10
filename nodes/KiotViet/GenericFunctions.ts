@@ -158,3 +158,81 @@ export async function kiotVietApiRequestAllItems(
 
   return returnData;
 }
+
+/**
+ * Simplify API responses to the top 10 most relevant fields (n8n UX Guideline)
+ */
+export function simplifyResponse(resource: string, data: any): any {
+  if (!data) return data;
+
+  const simplifyItem = (item: IDataObject): IDataObject => {
+    if (resource === 'product') {
+      return {
+        id: item.id,
+        code: item.code,
+        name: item.name,
+        categoryId: item.categoryId,
+        categoryName: item.categoryName,
+        basePrice: item.basePrice,
+        cost: item.cost,
+        unit: item.unit,
+        allowsSale: item.allowsSale,
+        inventories: item.inventories,
+      };
+    }
+    if (resource === 'customer') {
+      return {
+        id: item.id,
+        code: item.code,
+        name: item.name,
+        gender: item.gender,
+        contactNumber: item.contactNumber,
+        address: item.address,
+        email: item.email,
+        totalInvoiced: item.totalInvoiced,
+        totalRevenue: item.totalRevenue,
+        debt: item.debt,
+      };
+    }
+    if (resource === 'order') {
+      return {
+        id: item.id,
+        code: item.code,
+        status: item.status,
+        statusValue: item.statusValue,
+        createdDate: item.createdDate,
+        branchId: item.branchId,
+        branchName: item.branchName,
+        customerId: item.customerId,
+        customerName: item.customerName,
+        total: item.total,
+        totalPayment: item.totalPayment,
+      };
+    }
+    if (resource === 'invoice') {
+      return {
+        id: item.id,
+        code: item.code,
+        status: item.status,
+        statusValue: item.statusValue,
+        purchaseDate: item.purchaseDate,
+        branchId: item.branchId,
+        branchName: item.branchName,
+        customerId: item.customerId,
+        customerName: item.customerName,
+        total: item.total,
+        totalPayment: item.totalPayment,
+      };
+    }
+    return item;
+  };
+
+  if (Array.isArray(data)) {
+    return data.map((item) => (typeof item === 'object' && item !== null ? simplifyItem(item) : item));
+  }
+  if (typeof data === 'object' && data !== null) {
+    return simplifyItem(data);
+  }
+  return data;
+}
+
