@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-kiotviet-official",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The Ultimate KiotViet Integration for n8n. Manage Products, Orders, Invoices, Customers, and Real-time Webhooks.",
   "license": "MIT",
   "author": {
