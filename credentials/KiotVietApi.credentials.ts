@@ -47,7 +47,7 @@ export class KiotVietApi implements ICredentialType {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: 'scopes=PublicApi.Access&grant_type=client_credentials&client_id={{$credentials.clientId}}&client_secret={{$credentials.clientSecret}}',
+      body: '={{"scopes=PublicApi.Access&grant_type=client_credentials&client_id=" + encodeURIComponent($credentials.clientId) + "&client_secret=" + encodeURIComponent($credentials.clientSecret)}}',
     },
   };
 }

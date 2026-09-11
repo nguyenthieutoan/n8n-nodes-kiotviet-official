@@ -94,6 +94,9 @@ describe('KiotViet Node Suite', () => {
       expect(credentials.test).toBeDefined();
       expect(credentials.test?.request.baseURL).toBe('https://id.kiotviet.vn');
       expect(credentials.test?.request.url).toBe('/connect/token');
+      expect(String(credentials.test?.request.body).startsWith('=')).toBe(true);
+      expect(credentials.test?.request.body).toContain('scopes=PublicApi.Access');
+      expect(credentials.test?.request.body).toContain('grant_type=client_credentials');
     });
   });
 });
